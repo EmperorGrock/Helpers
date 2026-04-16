@@ -9,6 +9,57 @@ package helpers;
  * @author invisiblekoi
  */
 public class Input{
+
+	/**
+	 * Print the message, and keep asking for input until a valid double is entered
+	 * @param message The message to print before asking for input
+	 * @return the double that the user entered. 
+	 */
+	public static double getdouble(String message){
+		Terminal.printWithFormat(message + ": ", 7, 4);
+		String input;
+		double newDouble;
+		while(true){
+			try{
+				input = System.console().readLine();
+				newDouble = Double.parseDouble(input);
+				break;
+			}catch(NumberFormatException e){
+				Terminal.printlnWithFormat("Invalid input. Please enter a decimal number. ", 5, 3);
+				continue;
+			}
+		}
+		return newDouble;
+	}
+
+	/**
+	 * Print the message, and keep asking for input until a double is entered that is within the provided range (inclusive)
+	 * @param message The message to print before asking for input
+	 * @param min The minimum acceptable value (inclusive)
+	 * @param max The maximum acceptable value (inclusive)
+	 * @return The double that the user entered
+	 */
+	public static int getDouble(String message, double min, double max){
+		Terminal.printWithFormat(message + ": ", 2, 0);
+		String input;
+		int newDouble;
+		while(true){
+			try{
+				input = System.console().readLine();
+				newDouble = Double.parseDouble(input);
+				if(newDouble < min || newDouble > max){
+					Terminal.printlnWithFormat("Input must be between " + min + " and " + max + ".", 5, 3);
+				}else{
+					break;
+				}
+			}catch(NumberFormatException e){
+				Terminal.printlnWithFormat("Invalid input. Please enter a decimal number.", 5, 3);
+				continue;
+			}
+		}
+		return newDouble;
+	}
+
 	/**
 	 * Print the message, and keep asking for input until an integer is entered
 	 * @param message The message to print before asking for input
@@ -21,9 +72,6 @@ public class Input{
 		while(true){
 			try{
 				input = System.console().readLine();
-				if(input.equals("an integer")){
-					Terminal.printlnWithFormat("Really? Stop being cheeky.", 5, 3);
-				}
 				newInt = Integer.parseInt(input);
 				break;
 			}catch(NumberFormatException e){
@@ -48,9 +96,6 @@ public class Input{
 		while(true){
 			try{
 				input = System.console().readLine();
-				if(input.equals("between " + min + " and " + max)){
-					Terminal.printlnWithFormat("Really? Stop being cheeky.", 5, 3);
-				}
 				newInt = Integer.parseInt(input);
 				if(newInt < min || newInt > max){
 					Terminal.printlnWithFormat("Input must be between " + min + " and " + max + ".", 5, 3);
